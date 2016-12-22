@@ -19,7 +19,22 @@ class LoadingViewController: UIViewController, CAAnimationDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.view.layer.addSublayer(gradientLayer)
+        gradientLayer.frame = self.view.bounds
         
+        
+        let color1 = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0).cgColor
+        let color2 = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0).cgColor
+        
+        gradientLayer.colors = [color1, color2]
+        gradientLayer.locations = [0.0, 1.0]
+        
+        
+        
+        
+        
+        
+        titleLabel.text = "Lovelace"
         setupSubviews()
         
     }
@@ -28,56 +43,48 @@ class LoadingViewController: UIViewController, CAAnimationDelegate {
         super.viewDidAppear(animated)
         
         
-        gradientLayer.frame = self.view.bounds
         
-  
-        let color1 = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
-        let color2 = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
-
-        gradientLayer.colors = [color1, color2]
-        gradientLayer.locations = [0.0, 1.0]
-        
-       
-        self.view.layer.addSublayer(gradientLayer)
-        
-
-        
-        titleLabel.text = "Lovelace"
-        animateLayer()
-        
+        animateLayer(with: 1.0, name: "dark")
+//        animateLayer(with: 0.5, name: "light")
     }
     
-    func animateLayer(){
+    
+    
+    
+    
+    
+    
+    
+    func animateLayer(with alpha: CGFloat, name: String){
+        
+        let color1 = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha).cgColor
+        let color2 = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: alpha).cgColor
         
         var fromColors = self.gradientLayer.colors
-        var toColors: [AnyObject] = [ UIColor.blue.cgColor, UIColor.red.cgColor]
+        var toColors: [AnyObject] = [ color1, color2]
         
         var animation : CABasicAnimation = CABasicAnimation(keyPath: "colors")
         
         animation.fromValue = fromColors
         animation.toValue = toColors
         animation.duration = 3.00
-        animation.isRemovedOnCompletion = true
         animation.fillMode = kCAFillModeForwards
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         animation.delegate = self
+        animation.isRemovedOnCompletion = false
         
-        self.gradientLayer.add(animation, forKey:"animateGradient")
-    }
-    
-    
-    
-    
-    
-    func animateFadeText() {
+        self.gradientLayer.add(animation, forKey: name)
+        
+        
+        
         
         
         
         
         
     }
-  
     
+
     
     
     
@@ -87,14 +94,14 @@ class LoadingViewController: UIViewController, CAAnimationDelegate {
         
         self.view.addSubview(titleLabel)
         titleLabel.frame = CGRect(x: self.view.bounds.width * 0.25, y: self.view.bounds.height * 0.45, width: self.view.bounds.width * 0.5, height: self.view.bounds.height * 0.1)
-        titleLabel.backgroundColor = UIColor.white
+        titleLabel.backgroundColor = UIColor.clear
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.white
         
-        self.view.addSubview(titleFadeView)
-        titleFadeView.frame = CGRect(x: self.view.bounds.width * 0.25, y: self.view.bounds.height * 0.45, width: self.view.bounds.width * 0.5, height: self.view.bounds.height * 0.1)
-        titleFadeView.backgroundColor = UIColor.white
-        titleFadeView.alpha = 0.0
+//        self.view.addSubview(titleFadeView)
+//        titleFadeView.frame = CGRect(x: self.view.bounds.width * 0.25, y: self.view.bounds.height * 0.45, width: self.view.bounds.width * 0.5, height: self.view.bounds.height * 0.1)
+//        titleFadeView.backgroundColor = UIColor.white
+//        titleFadeView.alpha = 0.0
         
         
     }
